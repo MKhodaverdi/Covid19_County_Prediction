@@ -3,7 +3,7 @@
 # Predicting increases in COVID-19 incidence to identify locations for targeted testing in West Virginia: A machine learning enhanced approach  
 
 ## Authors
-[Brad Price, PhD](https://business.wvu.edu/faculty-and-staff/directory/profile?pid=273); [Maryam Khodaverdi, MS](https://directory.hsc.wvu.edu/Department/2109); [Adam Halasz, PhD](https://mathematics.wvu.edu/faculty-and-staff/faculty-directory/adam-halasz); [Brian Hendricks, PhD](https://directory.hsc.wvu.edu/Profile/52462); [Wesley Kimble, MPA](https://directory.hsc.wvu.edu/Department/2109); [Gordon S. Smith, PhD](https://directory.hsc.wvu.edu/Profile/46172); [Sally L. Hodder, MD](https://directory.hsc.wvu.edu/Profile/41751);
+[Brad Price](https://business.wvu.edu/faculty-and-staff/directory/profile?pid=273); [Maryam Khodaverdi](https://directory.hsc.wvu.edu/Department/2109); [Adam Halasz](https://mathematics.wvu.edu/faculty-and-staff/faculty-directory/adam-halasz); [Brian Hendricks](https://directory.hsc.wvu.edu/Profile/52462); [Wesley Kimble](https://directory.hsc.wvu.edu/Department/2109); [Gordon S. Smith](https://directory.hsc.wvu.edu/Profile/46172); [Sally L. Hodder](https://directory.hsc.wvu.edu/Profile/41751);
 
 ## Abstract
 During the COVID-19 pandemic, West Virginia developed an aggressive SARS-CoV-2 testing strategy which included utilizing pop-up mobile testing in locations anticipated to have near-term increases in SARS-CoV-2 infections. This study describes and compares two methods for predicting near-term SARS-CoV-2 incidence in West Virginia counties. The first method, Rt Only, is solely based on producing forecasts for each county using the daily instantaneous reproductive numbers, Rt.  The second method, ML+Rt, is a machine learning approach that uses a Long Short-Term Memory network to predict the near-term number of cases for each county using epidemiological statistics such as Rt, county population information, and time series trends including information on major holidays, as well as leveraging statewide COVID-19 trends across counties and county population size. 
@@ -15,9 +15,9 @@ Both approaches used daily county-level SARS-CoV-2 incidence data provided by th
 
 This repository is broken down into: 
 
-[Code_workbook](https://github.com/MKhodaverdi/COVID-County-Prediction/tree/main/Code_workbook)
+[Code_workbook](https://github.com/MKhodaverdi/Covid19_County_Prediction/tree/main/Code_Workbook)
 
-[Data_workbook](https://github.com/MKhodaverdi/COVID-County-Prediction/tree/main/Data_workbook)
+[Data_workbook](https://github.com/MKhodaverdi/Covid19_County_Prediction/tree/main/Data_Workbook)
 
 
 ## License
