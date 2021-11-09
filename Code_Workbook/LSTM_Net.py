@@ -183,24 +183,24 @@ def generate_model(dropout, neuronCount, neuronShrink, activFun):
     model.add(LSTM(units=int(neuronCount* neuronShrink* neuronShrink), activation=activFun, return_sequences=False))  
     model.add(Dropout(dropout))
     
-    model.add(Dense(units=1, activation='linear'))  #linear/ sigmoid
+    model.add(Dense(units=1, activation='linear'))  #linear/sigmoid
     model.summary()
     return model 
 
    
 
 # Compiling 
-def fitted_model(dropout,neuronCount,neuronShrink, lr, activFun):
+def fitted_model(dropout,neuronCount,neuronShrink, lr, activFun, epoch, batch):
     
     model = generate_model(dropout, neuronCount, neuronShrink, activFun)
     model.compile(optimizer = Adam(learning_rate=lr), loss='mean_absolute_error')  
     
-    es = EarlyStopping(monitor='val_loss', min_delta=1e-3, patience=30, verbose=1)
-    rlr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=30, verbose=1)
+    es = EarlyStopping(monitor='val_loss', min_delta=1e-3, patience=300, verbose=1)
+    rlr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=300, verbose=1)
     mcp = ModelCheckpoint(filepath='weights.h5', monitor='val_loss', verbose=1, save_best_only=True, save_weights_only=True)
     tb = TensorBoard('logs') 
-    history = model.fit(X_train, y_train, shuffle=True, epochs=300, callbacks=[es, rlr, mcp, tb],
-                        validation_data=(X_test, y_test), verbose=1, batch_size=128) 
+    history = model.fit(X_train, y_train, shuffle=True, epochs=epoch, callbacks=[es, rlr, mcp, tb],
+                        validation_data=(X_test, y_test), verbose=1, batch_size=batch) 
     
     plt.plot(history.history['loss'])
     plt.plot(history.history['val_loss'])
@@ -216,35 +216,41 @@ def fitted_model(dropout,neuronCount,neuronShrink, lr, activFun):
 
 
 # evaluate  
-def evaluate_model(neuronCount, dropout, neuronShrink, lr, activFun="relu"): #tanh
-    model, history = fitted_model(dropout,neuronCount,neuronShrink, lr, activFun)
+def evaluate_model(neuronCount, dropout, neuronShrink, lr, activFun,  epoch, batch): 
+    model, history = fitted_model(dropout,neuronCount,neuronShrink, lr, activFun,  epoch, batch)
     pred = model.predict(X_test)
-    mae_test = round(np.abs(np.subtract(y_test , pred)).mean(),2) 
+    mae_test = round(np.abs(np.subtract(y_test , pred)).mean(),3) 
     return -mae_test
 
 
 
 #%% call model
 
-pbound = { 'dropout': (0.1, 0.4),  
-           'neuronCount': (16, 52),  
+pbound = { 'dropout': (0.1, 0.8),  
+           'neuronCount': (4, 64),  
            'neuronShrink': (0.1, 0.9),
-           'lr': (0.0, 0.05)
+           'lr': (0.00001, 0.05)
+           'epoch': (4, 526), 
+	       'batch' : (4, 526),
+	       'activFun' :("relu", "tanh")
           }
 
 optimizer = BayesianOptimization(f=evaluate_model, pbounds=pbound, verbose=2, random_state=1)
 start_time = time.time()
-optimizer.maximize(init_points=8, n_iter=16,)
+optimizer.maximize(init_points=128, n_iter=256,)
 time_took = time.time() - start_time
 
 dropout = optimizer.max['params']['dropout']
 neuronCount = optimizer.max['params']['neuronCount']
 neuronShrink = optimizer.max['params']['neuronShrink']
 lr = optimizer.max['params']['lr']
+epoch = optimizer.max['params']['epoch']
+batch = optimizer.max['params']['batch']
+activFun = optimizer.max['params']['activFun']
 
 print(optimizer.max['params'])
 
-model, history = fitted_model(dropout,neuronCount,neuronShrink, lr, activFun="relu") #tanh
+model, history = fitted_model(dropout,neuronCount,neuronShrink, lr, activFun)
 
  
 
