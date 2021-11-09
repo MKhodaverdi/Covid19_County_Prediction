@@ -229,10 +229,10 @@ def evaluate_model(neuronCount, dropout, neuronShrink, lr, activFun,  epoch, bat
 pbound = { 'dropout': (0.1, 0.8),  
            'neuronCount': (4, 64),  
            'neuronShrink': (0.1, 0.9),
-           'lr': (0.00001, 0.05)
+           'lr': (0.00001, 0.05),
            'epoch': (4, 526), 
-	       'batch' : (4, 526),
-	       'activFun' :("relu", "tanh")
+	   'batch' : (4, 526),
+	   'activFun' :("relu", "tanh")
           }
 
 optimizer = BayesianOptimization(f=evaluate_model, pbounds=pbound, verbose=2, random_state=1)
@@ -250,7 +250,7 @@ activFun = optimizer.max['params']['activFun']
 
 print(optimizer.max['params'])
 
-model, history = fitted_model(dropout,neuronCount,neuronShrink, lr, activFun)
+model, history = fitted_model(dropout,neuronCount,neuronShrink, lr, activFun,  epoch, batch)
 
  
 
