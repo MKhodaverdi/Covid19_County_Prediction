@@ -230,8 +230,8 @@ pbound = { 'dropout': (0.1, 0.8),
            'neuronCount': (4, 64),  
            'neuronShrink': (0.1, 0.9),
            'lr': (0.00001, 0.05),
-           'epoch': (4, 526), 
-	   'batch' : (4, 526),
+           'epoch': (4, 512), 
+	   'batch' : (4, 512),
 	   'activFun' :("relu", "tanh")
           }
 
